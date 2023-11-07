@@ -1,0 +1,23 @@
+name: ♾️ Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ENVIRONMENT: DEVELOPMENT
+
+jobs:
+  debugging:
+    name: 🐞 Debugging
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🔎 Lint Files
+        run: deno run --allow-all main.ts
