@@ -7,6 +7,7 @@ on:
         - '**.js'
         - '**.css'
         - '**.hbs'
+        - '**.yml'
 
 env:
   ENVIRONMENT: PRODUCTION
