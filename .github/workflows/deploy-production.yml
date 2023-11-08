@@ -1,4 +1,4 @@
-name: Deployment
+name: 🚀 Production Deployment
 
 on:
   release:
@@ -8,8 +8,8 @@ env:
   ENVIRONMENT: PRODUCTION
 
 jobs:
-  deployment:
-    name: 🚀 Preview Deployment
+  deploy:
+    name: 🚀 Deploy
     runs-on: ubuntu-latest
     environment: Production
     steps:

@@ -1,4 +1,4 @@
-name: Deployment
+name: 🚀 Development Preview Deployment
 
 on:
   pull_request:
@@ -8,8 +8,8 @@ env:
   ENVIRONMENT: DEVELOPMENT
 
 jobs:
-  deployment:
-    name: 🚀 Preview Deployment
+  deploy:
+    name: 🚀 Deploy
     runs-on: ubuntu-latest
     environment: Development
     steps:

@@ -1,21 +1,21 @@
-name: Deployment
+name: 🚀 Staging Preview Deployment
 
 on:
   push:
     branches:
       - 'main'
-  paths:
-      - '**.ts'
-      - '**.js'
-      - '**.css'
-      - '**.hbs'
+    paths:
+        - '**.ts'
+        - '**.js'
+        - '**.css'
+        - '**.hbs'
 
 env:
   ENVIRONMENT: PRODUCTION
 
 jobs:
-  deployment:
-    name: 🚀 Preview Deployment
+  deploy:
+    name: 🚀 Deploy
     runs-on: ubuntu-latest
     environment: Staging
     steps:
