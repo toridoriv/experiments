@@ -1,0 +1,29 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - 'main'
+  paths:
+      - '**.ts'
+      - '**.js'
+      - '**.css'
+      - '**.hbs'
+
+env:
+  ENVIRONMENT: PRODUCTION
+
+jobs:
+  deployment:
+    name: 🚀 Preview Deployment
+    runs-on: ubuntu-latest
+    environment: Staging
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🔎 Inspect
+        run: deno run --allow-all main.ts

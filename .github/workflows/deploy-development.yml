@@ -1,9 +1,8 @@
 name: Deployment
 
 on:
-  push:
-    branches:
-      - 'main'
+  pull_request:
+    types: [opened, edited]
 
 env:
   ENVIRONMENT: DEVELOPMENT
@@ -12,7 +11,7 @@ jobs:
   deployment:
     name: 🚀 Preview Deployment
     runs-on: ubuntu-latest
-    environment: staging
+    environment: Development
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
