@@ -1,1 +1,2 @@
-console.log(Deno.env.toObject());
+console.info("ENVIRONMENT");
+console.info(Deno.env.toObject());
