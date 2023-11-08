@@ -1,4 +1,4 @@
-name: 👁️‍🗨️ Preview
+name: Deployment
 
 on:
   push:
@@ -10,8 +10,9 @@ env:
 
 jobs:
   deployment:
-    name: 🚀 Deployment
+    name: 🚀 Preview Deployment
     runs-on: ubuntu-latest
+    environment: staging
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
