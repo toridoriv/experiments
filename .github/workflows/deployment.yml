@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Development
-      url: https://toriexperiments-${GITHUB_REF_NAME}.deno.dev
+      url: https://toriexperiments-${{ env.GITHUB_REF_NAME }}.deno.dev
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
