@@ -61,7 +61,7 @@ jobs:
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
         run: deployctl deploy --project=toriexperiments main.ts
-  staging-deployment:
+  production-deployment:
     name: 💼 Production Deploy
     if: ${{ github.event_name == 'release' && github.event.action == 'created' }} 
     runs-on: ubuntu-latest
