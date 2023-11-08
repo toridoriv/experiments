@@ -1,0 +1,81 @@
+name: 🚀 Deployments
+
+on:
+  push:
+    paths:
+        - '**.ts'
+        - '**.js'
+        - '**.css'
+        - '**.hbs'
+
+env:
+  ENVIRONMENT: PRODUCTION
+  DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
+
+jobs:
+  check-code-quality:
+    name: ✅ Check Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🔎 Lint Files
+        run: echo "deno lint"
+      - name: 👌 Check Format
+        run: echo "deno task format:check"
+      - name: 🧪 Run Tests
+        run: echo "deno task test"
+  development-deployment:
+    name: 🚧 Development Deploy
+    if: ${{ github.ref != 'ref/heads/main' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: Development
+      url: https://toriexperiments-${GITHUB_REF_NAME}.deno.dev
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🧰 Install Deploy Tool
+        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+      - name: 🚀 Deploy
+        run: deployctl deploy --project=toriexperiments main.ts
+  staging-deployment:
+    name: 🎪 Staging Deploy
+    if: ${{ github.ref == 'ref/heads/main' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: Staging
+      url: https://toriexperiments-main.deno.dev
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🧰 Install Deploy Tool
+        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+      - name: 🚀 Deploy
+        run: deployctl deploy --project=toriexperiments main.ts
+  staging-deployment:
+    name: 💼 Production Deploy
+    if: ${{ github.event_name == 'release' && github.event.action == 'created' }} 
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://toriexperiments.deno.dev
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🧰 Install Deploy Tool
+        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+      - name: 🚀 Deploy
+        run: deployctl deploy --project=toriexperiments --prod main.ts
