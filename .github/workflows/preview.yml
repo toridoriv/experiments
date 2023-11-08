@@ -1,16 +1,16 @@
-name: ♾️ Continuous Integration
+name: 👁️‍🗨️ Preview
 
 on:
   push:
     branches:
-      - main
+      - 'main'
 
 env:
   ENVIRONMENT: DEVELOPMENT
 
 jobs:
-  debugging:
-    name: 🐞 Debugging
+  deployment:
+    name: 🚀 Deployment
     runs-on: ubuntu-latest
     steps:
       - name: 👯‍♂️ Clone Repository
