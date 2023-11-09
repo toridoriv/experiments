@@ -50,7 +50,7 @@ jobs:
         id: deploy
         run: |
           deno run --allow-all deploy.ts
-          echo $DEPLOYMENT_URL >> "$GITHUB_OUTPUT"
+          cat ./output.txt >> "$GITHUB_OUTPUT"
   staging-deployment:
     name: 🎪 Staging Deploy
     needs: check-code-quality
@@ -75,7 +75,7 @@ jobs:
         id: deploy
         run: |
           deno run --allow-all deploy.ts
-          echo $DEPLOYMENT_URL >> "$GITHUB_OUTPUT"
+          cat ./output.txt >> "$GITHUB_OUTPUT"
   production-deployment:
     name: 💼 Production Deploy
     needs: check-code-quality
