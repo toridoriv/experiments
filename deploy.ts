@@ -75,13 +75,17 @@ function formatStringCommand(command: string, args: string[] = []) {
 
 function getUrlOutput(deployOutput: string) {
   const lines = deployOutput.split("\n").toReversed();
-  const url = lines[0].replace(" - ", "url=");
+  const url = lines[1].replace(" - ", "url=");
 
   return url;
 }
 
 const options = getOptions();
-const args = ["deploy", "--project=toriexperiments", "--include=main.ts"];
+const args = [
+  "deploy",
+  "--project=toriexperiments",
+  "--include=main.ts",
+];
 
 if (options.production) {
   args.push("--production");
