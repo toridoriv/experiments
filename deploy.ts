@@ -87,6 +87,8 @@ if (options.production) {
   args.push("--production");
 }
 
+args.push("main.ts");
+
 const output = executeCommand("deployctl", { args });
 const url = getUrlOutput(output);
 
