@@ -1,5 +1,4 @@
 import { parse } from "https://deno.land/std@0.205.0/flags/mod.ts";
-import ansicolors from "https://esm.sh/ansi-colors@4.1.3";
 
 /**
  * Custom error class for subprocess errors.
@@ -58,19 +57,7 @@ function getOptions() {
 function initExecuteCommand(main: string, options?: Deno.CommandOptions) {
   const command = new Deno.Command(main, options);
 
-  console.debug(
-    `Executing command: \n  ${formatStringCommand(main, options?.args)}`,
-  );
-
   return command;
-}
-
-function formatStringCommand(command: string, args: string[] = []) {
-  const prompt = ansicolors.greenBright("$");
-  const cmd = ansicolors.greenBright.bold(command);
-  const opts = ansicolors.white(args.join(" "));
-
-  return ansicolors.bgBlack(`${prompt} ${cmd} ${opts}`);
 }
 
 function getUrlOutput(deployOutput: string) {
