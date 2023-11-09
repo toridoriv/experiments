@@ -85,4 +85,4 @@ const url = getUrlOutput(output);
 
 console.info(output);
 
-Deno.writeTextFileSync("./output.txt", url);
+Deno.writeTextFileSync("./output.txt", `url=${url}`);
