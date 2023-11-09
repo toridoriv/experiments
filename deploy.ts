@@ -62,7 +62,7 @@ function initExecuteCommand(main: string, options?: Deno.CommandOptions) {
 
 function getUrlOutput(deployOutput: string) {
   const lines = deployOutput.split("\n").toReversed();
-  const url = lines[1].replace(" - ", "url=");
+  const url = lines[1].replace(" - ", "");
 
   return url;
 }
@@ -83,4 +83,4 @@ args.push("main.ts");
 const output = executeCommand("deployctl", { args });
 const url = getUrlOutput(output);
 
-console.info(url);
+Deno.env.set("DEPLOYMENT_URL", url);

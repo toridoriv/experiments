@@ -48,7 +48,9 @@ jobs:
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
         id: deploy
-        run: deno run --allow-all deploy.ts >> "$GITHUB_OUTPUT"
+        run: |
+          deno run --allow-all deploy.ts
+          echo $DEPLOYMENT_URL >> "$GITHUB_OUTPUT"
   staging-deployment:
     name: 🎪 Staging Deploy
     needs: check-code-quality
@@ -71,7 +73,9 @@ jobs:
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
         id: deploy
-        run: deno run --allow-all deploy.ts >> "$GITHUB_OUTPUT"
+        run: |
+          deno run --allow-all deploy.ts
+          echo $DEPLOYMENT_URL >> "$GITHUB_OUTPUT"
   production-deployment:
     name: 💼 Production Deploy
     needs: check-code-quality
@@ -94,4 +98,7 @@ jobs:
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
         id: deploy
-        run: deno run --allow-all deploy.ts --production >> "$GITHUB_OUTPUT"
+        run: |
+          deno run --allow-all deploy.ts
+          echo $DEPLOYMENT_URL >> "$GITHUB_OUTPUT"
+          
