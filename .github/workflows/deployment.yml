@@ -36,7 +36,7 @@ jobs:
       contents: read
     environment:
       name: Development
-      url: ${{ steps.deploy.outputs.url_output }}
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
@@ -61,7 +61,7 @@ jobs:
       contents: read
     environment:
       name: Staging
-      url: ${{ steps.deploy.outputs.url_output }}
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
