@@ -1,0 +1,101 @@
+name: 🚀 Deployments
+
+on:
+  push:
+    paths:
+        - '**.ts'
+        - '**.js'
+        - '**.css'
+        - '**.hbs'
+        - '**.yml'
+
+env:
+  ENVIRONMENT: PRODUCTION
+  DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
+
+jobs:
+  check-code-quality:
+    name: ✅ Check Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🔎 Lint Files
+        run: echo "deno lint"
+      - name: 👌 Check Format
+        run: echo "deno task format:check"
+      - name: 🧪 Run Tests
+        run: echo "deno task test"
+  development-deployment:
+    name: 🚧 Development Deploy
+    needs: check-code-quality
+    if: ${{ github.ref != 'ref/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment:
+      name: Development
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🧰 Install Deploy Tool
+        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+      - name: 🚀 Deploy
+        id: deploy
+        run: |
+          deno run --allow-all deploy.ts
+          cat ./output.txt >> "$GITHUB_OUTPUT"
+  staging-deployment:
+    name: 🎪 Staging Deploy
+    needs: check-code-quality
+    if: ${{ github.ref == 'ref/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment:
+      name: Staging
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🧰 Install Deploy Tool
+        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+      - name: 🚀 Deploy
+        id: deploy
+        run: |
+          deno run --allow-all deploy.ts
+          cat ./output.txt >> "$GITHUB_OUTPUT"
+  production-deployment:
+    name: 💼 Production Deploy
+    needs: check-code-quality
+    if: ${{ github.event_name == 'release' && github.event.action == 'created' }} 
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment:
+      name: Production
+      url: https://toriexperiments.deno.dev
+    steps:
+      - name: 👯‍♂️ Clone Repository
+        uses: actions/checkout@v4
+      - name: 🦕 Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+      - name: 🧰 Install Deploy Tool
+        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+      - name: 🚀 Deploy
+        id: deploy
+        run: deno run --allow-all deploy.ts

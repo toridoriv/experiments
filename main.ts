@@ -1,2 +1,1 @@
-console.info("ENVIRONMENT");
-console.info(Deno.env.toObject());
+Deno.serve(() => new Response("🎶 Luna quieres ser madre 🎶"));
