@@ -36,7 +36,7 @@ jobs:
       contents: read
     environment:
       name: Development
-      url: https://toriexperiments-${{ env.GITHUB_REF_NAME }}.deno.dev
+      url: ${{ steps.step_name.outputs.url_output }} # optional
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
@@ -47,7 +47,8 @@ jobs:
       - name: 🧰 Install Deploy Tool
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
-        run: deployctl deploy --project=toriexperiments main.ts
+        id: deploy
+        run: deno run --allow-all deploy.ts >> "$GITHUB_OUTPUT"
   staging-deployment:
     name: 🎪 Staging Deploy
     needs: check-code-quality
@@ -69,7 +70,8 @@ jobs:
       - name: 🧰 Install Deploy Tool
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
-        run: deployctl deploy --project=toriexperiments main.ts
+        id: deploy
+        run: deno run --allow-all deploy.ts >> "$GITHUB_OUTPUT"
   production-deployment:
     name: 💼 Production Deploy
     needs: check-code-quality
@@ -91,4 +93,5 @@ jobs:
       - name: 🧰 Install Deploy Tool
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
-        run: deployctl deploy --project=toriexperiments --prod main.ts
+        id: deploy
+        run: deno run --allow-all deploy.ts --production >> "$GITHUB_OUTPUT"
