@@ -100,5 +100,4 @@ jobs:
         id: deploy
         run: |
           deno run --allow-all deploy.ts
-          echo $DEPLOYMENT_URL >> "$GITHUB_OUTPUT"
-          
+          cat ./output.txt >> "$GITHUB_OUTPUT"

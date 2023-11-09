@@ -83,4 +83,6 @@ args.push("main.ts");
 const output = executeCommand("deployctl", { args });
 const url = getUrlOutput(output);
 
-Deno.env.set("DEPLOYMENT_URL", url);
+console.info(output);
+
+Deno.writeTextFileSync("./output.txt", url);
