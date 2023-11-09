@@ -61,8 +61,8 @@ function initExecuteCommand(main: string, options?: Deno.CommandOptions) {
 }
 
 function getUrlOutput(deployOutput: string) {
-  const lines = deployOutput.split("\n").toReversed();
-  const url = lines[1].replace(" - ", "");
+  const lines = deployOutput.split("\n");
+  const url = lines[lines.indexOf("View at:") + 1].replace(" - ", "");
 
   return url;
 }
