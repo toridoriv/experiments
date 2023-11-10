@@ -7,7 +7,7 @@ on:
         - '**.js'
         - '**.css'
         - '**.hbs'
-        - '**.yml'
+        - '.github/workflows/*.yml'
 
 env:
   ENVIRONMENT: PRODUCTION
