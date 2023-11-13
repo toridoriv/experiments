@@ -70,7 +70,7 @@ jobs:
         with:
           deno-version: vx.x.x
       - name: 🧰 Install Deploy Tool
-        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+        run: deno install -A --no-check -r -f https://deno.land/x/deno_project_manager/deno-manage.ts
       - name: 🚀 Deploy
         id: deploy
         run: deno-manage deploy main.ts
@@ -93,7 +93,7 @@ jobs:
         with:
           deno-version: vx.x.x
       - name: 🧰 Install Deploy Tool
-        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+        run: deno install -A --no-check -r -f https://deno.land/x/deno_project_manager/deno-manage.ts
       - name: 🚀 Deploy
         id: deploy
         run: deno-manage deploy main.ts
