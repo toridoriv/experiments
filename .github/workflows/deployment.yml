@@ -12,6 +12,8 @@ on:
 env:
   ENVIRONMENT: PRODUCTION
   DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
+  DENO_MANAGE_PROJECT_ID: toriexperiments
+  DENO_MANAGE_DEPLOY_EXCLUSIONS: 'LICENSE, .github/*'
 
 jobs:
   check-code-quality:
@@ -36,7 +38,7 @@ jobs:
       contents: read
     environment:
       name: Development
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.DEPLOY_URL }}
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
@@ -45,12 +47,10 @@ jobs:
         with:
           deno-version: vx.x.x
       - name: 🧰 Install Deploy Tool
-        run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
+        run: deno install -A --no-check -r -f https://deno.land/x/deno_project_manager/deno-manage.ts
       - name: 🚀 Deploy
         id: deploy
-        run: |
-          deno run --allow-all deploy.ts
-          cat ./output.txt >> "$GITHUB_OUTPUT"
+        run: deno-manage deploy main.ts
   staging-deployment:
     name: 🎪 Staging Deploy
     needs: check-code-quality
@@ -61,7 +61,7 @@ jobs:
       contents: read
     environment:
       name: Staging
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.DEPLOY_URL }}
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
@@ -73,9 +73,7 @@ jobs:
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
         id: deploy
-        run: |
-          deno run --allow-all deploy.ts
-          cat ./output.txt >> "$GITHUB_OUTPUT"
+        run: deno-manage deploy main.ts
   production-deployment:
     name: 💼 Production Deploy
     needs: check-code-quality
@@ -86,7 +84,7 @@ jobs:
       contents: read
     environment:
       name: Production
-      url: https://toriexperiments.deno.dev
+      url: ${{ steps.deploy.outputs.DEPLOY_URL }}
     steps:
       - name: 👯‍♂️ Clone Repository
         uses: actions/checkout@v4
@@ -98,4 +96,4 @@ jobs:
         run: deno install -A --no-check -r -f https://deno.land/x/deploy/deployctl.ts
       - name: 🚀 Deploy
         id: deploy
-        run: deno run --allow-all deploy.ts
+        run: deno-manage deploy main.ts
