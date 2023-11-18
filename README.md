@@ -1,2 +1,2 @@
-# experiments
+# Experiments
 My personal laboratory 🧪🔬
