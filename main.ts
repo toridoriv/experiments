@@ -1,5 +1,6 @@
 Deno.serve(() =>
   new Response(
-    "🎶🎶 Que llegaras con rosas, con mil rosas para mí, porque ya sabes que me encantan esas cosas soy así 🎶🎶",
+    "<h1>Sweet but Psycho</h1><p>🎶 Oh, she's sweet but a psycho 🎶</p>",
+    { headers: { "content-type": "text/html" } },
   )
 );
